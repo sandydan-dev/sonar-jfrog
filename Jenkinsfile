@@ -23,9 +23,11 @@ pipeline {
 
        // TEST STAGE START
         stage("test stage"){
-           echo "----- test start -----"
-           sh "mvn surefire-report:report"
-           echo "----- test end ------"
+          steps { 
+             echo "----- test start -----"
+             sh "mvn surefire-report:report"
+             echo "----- test end ------"
+          }
         }
        // TEST STAGE END 
  
@@ -37,12 +39,13 @@ pipeline {
             }
            // SCANNER ENV END
 
+            steps {
            // SONAR SERVER START
-	    withSonarQubeEnv("sandy-sonar-server"){
-                sh "${scannerHome}/bin/sonar-scanner"
-            }
+	       withSonarQubeEnv("sandy-sonar-server"){
+                  sh "${scannerHome}/bin/sonar-scanner"
+               }
            // SONAR SERVER END
-
+            }
         }
        // SONAR ANALYSIS END
 
