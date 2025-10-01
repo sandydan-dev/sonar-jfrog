@@ -1,3 +1,6 @@
+// Define the URL of the Artifactory registry
+def registry = 'https://trial28jeay.jfrog.io/'
+
 pipeline {
    agent any
 
@@ -48,6 +51,49 @@ pipeline {
             }
         }
        // SONAR ANALYSIS END
+
+       // JFROG START
+      
+        stage("Jar Publish"){
+
+           steps {
+
+               // SCRIPT START
+
+                  script {
+
+                     echo "----- Jar publish start -----" 
+
+                     def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "artifact-product"
+                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
+                     def version = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+                   
+                     def uploadSpec = """{
+                          "files": [
+                            {
+                              "pattern": "target/*.war",
+                              "target": "sandysonar-libs-release-local/war-files-verions/${version}/",
+                              "flat": "true",
+                              "props": "${properties}",
+                              "exclusions": [ "*.sha1", "*.md5"]
+                            }
+                         ]
+                     }"""
+                    def buildInfo = server.upload(uploadSpec)
+                    buildInfo.env.collect()
+                    server.publishBuildInfo(buildInfo)
+                     
+                     echo "----- Jar publish end ------"
+                  }
+
+               // SCRIPT END    
+    
+           }
+
+        }   
+     
+       // JFROG END
+
 
     }
    // STAGES END
