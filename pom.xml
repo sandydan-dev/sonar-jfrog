@@ -6,7 +6,7 @@
 
   <groupId>com.example</groupId>
   <artifactId>webapp</artifactId>
-  <version>1.0-1</version>
+  <version>1.0-2</version>
   <packaging>war</packaging>  <!-- changed from jar to war -->
   <name>webapp</name>
   <url>http://maven.apache.org</url>
