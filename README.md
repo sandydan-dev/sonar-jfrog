@@ -8,3 +8,5 @@ export PATH
 
 
 
+<img width="1366" height="514" alt="sonarqube-test" src="https://github.com/user-attachments/assets/520d84c7-fe1d-464e-b42e-080f10ed7fce" />
+<img width="1311" height="547" alt="jfrog-end-product" src="https://github.com/user-attachments/assets/e2e337eb-a137-4638-a1a7-e614d69767f5" />
